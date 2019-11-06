@@ -2,10 +2,28 @@
     <string name="app_name">BookExchange</string>
     <string name="email_address">Email Address</string>
     <string name="log_in">Log in</string>
+    <string name="enter_details">Enter Details</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="re_enter_password">Re-enter Password</string>
+    <string name="enter_usn">Enter USN</string>
+    <string name="select_branch">Select Branch</string>
+    <string name="account_could_not_be_created">Account could not be created</string>
+    <string name="log_in_successful">Log in successful</string>
+    <string name="create_free_account">Create free account</string>
     <string name="need_an_account">Need an account?</string>
     <string name="create_an_account">Create an account</string>
     <string name="forgot_password">Forgot Password?</string>
+    <string name="confirm_password">Confirm Password</string>
     <string name="enter_password_hint">Enter Password</string>
     <string name="email_address_hint">name@email.com</string>
     <string name="log_in_to_your_account">Log in to your account</string>
+
+    <string-array name="spinner_branch">
+        <item>ISE</item>
+        <item>CSE</item>
+        <item>ECE</item>
+        <item>MECH</item>
+        <item>CIVIL</item>
+        <item>EEE</item>
+    </string-array>
 </resources>

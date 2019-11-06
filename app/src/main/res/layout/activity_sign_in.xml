@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             app:cardCornerRadius="20dp"
-            app:cardElevation="3dp"
+            app:cardElevation="5dp"
             android:background="@color/white">
 
             <LinearLayout
@@ -49,6 +49,7 @@
                     android:text="@string/email_address" />
 
                 <EditText
+                    android:id="@+id/email_edit_text_sign_in"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
@@ -60,6 +61,7 @@
                     android:drawableEnd="@drawable/ic_mail"/>
 
                 <EditText
+                    android:id="@+id/password_edit_text_sign_in"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
@@ -83,6 +85,7 @@
                     android:textColor="@color/colorAccent"/>
 
                 <Button
+                    android:id="@+id/log_in_button"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/log_in_button"
@@ -91,6 +94,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="18dp"
                     android:textAllCaps="false"
+                    android:onClick="logInClick"
                     android:textSize="16sp"
                     app:elevation="5dp"
                     android:fontFamily="@font/poppins_medium"/>
@@ -118,6 +122,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_medium"
                         android:text="@string/create_an_account"
+                        android:onClick="createAccountClick"
                         android:textStyle="bold"
                         android:textColor="@color/colorAccent"
                         android:textSize="15sp"/>
