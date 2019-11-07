@@ -5,20 +5,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-
-
+    tools:context=".UploadActivity">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_bar"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_gravity="start"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         app:menu="@menu/bottom_nav_bar"
         android:layout_alignParentBottom="true"
         android:background="@color/colorAccent"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"/>
-
 </RelativeLayout>

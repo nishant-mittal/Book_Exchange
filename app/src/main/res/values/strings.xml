@@ -6,6 +6,10 @@
     <string name="enter_name">Enter Name</string>
     <string name="re_enter_password">Re-enter Password</string>
     <string name="enter_usn">Enter USN</string>
+    <string name="home">Home</string>
+    <string name="add">Add</string>
+    <string name="profile">Profile</string>
+    <string name="sign_out">Sign out</string>
     <string name="select_branch">Select Branch</string>
     <string name="account_could_not_be_created">Account could not be created</string>
     <string name="log_in_successful">Log in successful</string>
