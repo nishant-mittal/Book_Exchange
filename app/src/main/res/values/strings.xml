@@ -5,6 +5,8 @@
     <string name="email_address">Email Address</string>
     <string name="submit">Submit</string>
     <string name="log_in">Log in</string>
+    <string name="semester">Semester:</string>
+    <string name="branch">Branch:</string>
     <string name="number">+91</string>
     <string name="enter_details">Enter Details</string>
     <string name="enter_name">Enter Name</string>

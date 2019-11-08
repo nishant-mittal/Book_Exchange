@@ -1,29 +1,53 @@
 package com.example.android.bookexchange;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
 
 public class UploadActivity extends AppCompatActivity {
     private ImageView bookImage;
     private Button selectImageButton,submitButton;
     private Spinner semesterSpinner,branchSpinner;
     private EditText bookNamesEditText,phoneEditText;
+    private Uri imageUri;
+    private static final int PICK_IMAGE_REQUEST = 1;
+    private StorageReference mStorageReference;
+    private DatabaseReference mDatabaseReference;
+    private StorageTask mUploadTask;
+    //private ProgressBar mProgressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,9 +60,18 @@ public class UploadActivity extends AppCompatActivity {
         branchSpinner = findViewById(R.id.select_branch_spinner);
         bookNamesEditText = findViewById(R.id.book_names_edit_text);
         phoneEditText = findViewById(R.id.enter_phone_edit_text);
+        //mProgressBar = findViewById(R.id.progress_bar);
         navbarDisplay();
 
+        mStorageReference = FirebaseStorage.getInstance().getReference("images");
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference("images");
 
+        selectImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageChooser();
+            }
+        });
 
     }
 
@@ -71,17 +104,95 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     public void uploadSubmitButtonClick(View v) {
-        String bookNames = bookNamesEditText.getText().toString();
+        submitButton.setEnabled(false);
+        Drawable drawable = getDrawable(R.drawable.log_in_button_disabled);
+        submitButton.setBackground(drawable);
+        final String bookNames = bookNamesEditText.getText().toString();
         if(TextUtils.isEmpty(bookNames)) {
             bookNamesEditText.setError("Enter book names");
         }
-        String phoneNumber = phoneEditText.getText().toString().trim();
+        final String phoneNumber = phoneEditText.getText().toString().trim();
         if(TextUtils.isEmpty(phoneNumber) || phoneNumber.length() != 10) {
             phoneEditText.setError("Invalid phone number");
         }
+        if(imageUri == null) {
+            Toast.makeText(UploadActivity.this, R.string.select_image, Toast.LENGTH_SHORT).show();
+        }
         else {
-            String semester = semesterSpinner.getSelectedItem().toString();
-            String branch = branchSpinner.getSelectedItem().toString();
+            final String semester = semesterSpinner.getSelectedItem().toString();
+            final String branch = branchSpinner.getSelectedItem().toString();
+                StorageReference fileReference = mStorageReference.child(System.currentTimeMillis()
+                        + "." + getFileExtension(imageUri));
+
+                mUploadTask = fileReference.putFile(imageUri)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                               /* Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mProgressBar.setProgress(0);
+                                    }
+                                }, 500);*/
+
+
+
+                                Books bookDataEntry = new Books(taskSnapshot.getMetadata().getReference().getDownloadUrl().toString(),semester,branch,bookNames,"" + System.currentTimeMillis(),phoneNumber);
+                                /*Upload upload = new Upload(mEditTextFileName.getText().toString().trim(),
+                                        taskSnapshot.getDownloadUrl().toString());*/
+                                String uploadId = mDatabaseReference.push().getKey();
+                                Log.d("tag", "onSuccess: " + mStorageReference.child("images/" + uploadId).getDownloadUrl().toString());
+                                mDatabaseReference.child(uploadId).setValue(bookDataEntry);
+                                Toast.makeText(UploadActivity.this, "Upload successful", Toast.LENGTH_LONG).show();
+                                submitButton.setEnabled(true);
+                                Drawable drawable = getDrawable(R.drawable.log_in_button);
+                                submitButton.setBackground(drawable);
+                                Intent intent = new Intent(UploadActivity.this,MainActivity.class);
+                                startActivity(intent);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(UploadActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                                /*double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                                mProgressBar.setProgress((int) progress);*/
+                            }
+                        });
+
         }
     }
+
+    private void imageChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent,PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            imageUri = data.getData();
+            bookImage.setImageURI(imageUri);
+        }
+    }
+
+    private String getFileExtension(Uri uri) {
+        ContentResolver cR = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cR.getType(uri));
+    }
+
+
+
+
 }
