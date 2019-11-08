@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">BookExchange</string>
     <string name="contact">Contact</string>
-    <string name="enter_number">Enter number</string>
+    <string name="enter_number">Enter phone number</string>
     <string name="email_address">Email Address</string>
+    <string name="submit">Submit</string>
     <string name="log_in">Log in</string>
     <string name="number">+91</string>
     <string name="enter_details">Enter Details</string>

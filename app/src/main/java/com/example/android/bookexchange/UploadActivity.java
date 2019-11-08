@@ -5,8 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -14,13 +20,25 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class UploadActivity extends AppCompatActivity {
-
+    private ImageView bookImage;
+    private Button selectImageButton,submitButton;
+    private Spinner semesterSpinner,branchSpinner;
+    private EditText bookNamesEditText,phoneEditText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
 
+        bookImage = findViewById(R.id.selected_image_image_view);
+        selectImageButton = findViewById(R.id.select_image_button);
+        submitButton = findViewById(R.id.upload_submit_button);
+        semesterSpinner = findViewById(R.id.select_semester_spinner);
+        branchSpinner = findViewById(R.id.select_branch_spinner);
+        bookNamesEditText = findViewById(R.id.book_names_edit_text);
+        phoneEditText = findViewById(R.id.enter_phone_edit_text);
         navbarDisplay();
+
+
 
     }
 
@@ -50,5 +68,20 @@ public class UploadActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    public void uploadSubmitButtonClick(View v) {
+        String bookNames = bookNamesEditText.getText().toString();
+        if(TextUtils.isEmpty(bookNames)) {
+            bookNamesEditText.setError("Enter book names");
+        }
+        String phoneNumber = phoneEditText.getText().toString().trim();
+        if(TextUtils.isEmpty(phoneNumber) || phoneNumber.length() != 10) {
+            phoneEditText.setError("Invalid phone number");
+        }
+        else {
+            String semester = semesterSpinner.getSelectedItem().toString();
+            String branch = branchSpinner.getSelectedItem().toString();
+        }
     }
 }

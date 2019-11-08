@@ -6,11 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".UploadActivity">
 
+
     <ScrollView
         android:id="@+id/create_entry"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_navigation_bar">
+
+
 
 
         <androidx.cardview.widget.CardView
@@ -52,14 +55,16 @@
                             android:orientation="vertical">
 
                             <ImageView
+                                android:id="@+id/selected_image_image_view"
                                 android:padding="20dp"
-                                android:layout_width="150dp"
-                                android:layout_height="150dp"
+                                android:layout_width="130dp"
+                                android:layout_height="130dp"
                                 android:src="@drawable/books"/>
 
                             <Button
+                                android:id="@+id/select_image_button"
                                 android:layout_gravity="bottom|center"
-                                android:layout_width="150dp"
+                                android:layout_width="130dp"
                                 android:layout_height="wrap_content"
                                 android:text="@string/select_image"
                                 android:background="@drawable/select_image_button"
@@ -86,6 +91,7 @@
                            android:textStyle="bold" />
 
                        <Spinner
+                           android:id="@+id/select_semester_spinner"
                            android:layout_marginTop="10dp"
                            android:layout_width="match_parent"
                            android:layout_height="wrap_content"
@@ -102,6 +108,7 @@
                            android:textStyle="bold" />
 
                        <Spinner
+                           android:id="@+id/select_branch_spinner"
                            android:layout_marginTop="10dp"
                            android:layout_width="match_parent"
                            android:layout_height="wrap_content"
@@ -111,10 +118,11 @@
 
                 </LinearLayout>
                     <EditText
+                        android:id="@+id/book_names_edit_text"
                         android:layout_margin="10dp"
                         android:gravity="start"
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
+                        android:layout_height="80dp"
                         android:hint="@string/enter_book_names"
                         android:fontFamily="@font/poppins_medium"/>
 
@@ -129,7 +137,7 @@
                     android:textStyle="bold"/>
 
                <LinearLayout
-                   android:layout_marginTop="10dp"
+                   android:layout_marginTop="8dp"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:orientation="horizontal">
@@ -145,19 +153,30 @@
                        android:textStyle="bold"/>
 
                    <EditText
+                       android:id="@+id/enter_phone_edit_text"
                        android:layout_marginStart="10dp"
                        android:layout_marginEnd="20dp"
                        android:gravity="start"
                        android:layout_width="match_parent"
                        android:layout_height="wrap_content"
                        android:hint="@string/enter_number"
+                       android:inputType="phone"
                        android:fontFamily="@font/poppins_medium"/>
                </LinearLayout>
 
-
+                <Button
+                    android:id="@+id/upload_submit_button"
+                    android:layout_marginTop="6dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/submit"
+                    android:textColor="@color/white"
+                    android:onClick="uploadSubmitButtonClick"
+                    android:fontFamily="@font/poppins_medium"
+                    android:background="@drawable/log_in_button"
+                    android:layout_gravity="center"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
 
     </ScrollView>
 
