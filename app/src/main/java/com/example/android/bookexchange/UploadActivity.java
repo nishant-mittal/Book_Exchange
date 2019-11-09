@@ -79,7 +79,6 @@ public class UploadActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_bar);
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(1);
-        menuItem.setChecked(true);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -104,9 +103,7 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     public void uploadSubmitButtonClick(View v) {
-        submitButton.setEnabled(false);
-        Drawable drawable = getDrawable(R.drawable.log_in_button_disabled);
-        submitButton.setBackground(drawable);
+
         final String bookNames = bookNamesEditText.getText().toString();
         if(TextUtils.isEmpty(bookNames)) {
             bookNamesEditText.setError("Enter book names");
@@ -119,6 +116,9 @@ public class UploadActivity extends AppCompatActivity {
             Toast.makeText(UploadActivity.this, R.string.select_image, Toast.LENGTH_SHORT).show();
         }
         else {
+            submitButton.setEnabled(false);
+            Drawable drawable = getDrawable(R.drawable.log_in_button_disabled);
+            submitButton.setBackground(drawable);
             final String semester = semesterSpinner.getSelectedItem().toString();
             final String branch = branchSpinner.getSelectedItem().toString();
                 StorageReference fileReference = mStorageReference.child(System.currentTimeMillis()

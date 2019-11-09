@@ -2,24 +2,67 @@ package com.example.android.bookexchange;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import es.dmoral.toasty.Toasty;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
+    private RecyclerView mRecyclerView;
+    private DatabaseReference mDatabaseReference;
+    private List<Books> mBooksList;
+    private bookAdapter mBookAdapter;
+    private ProgressBar mProgressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         navbarDisplay();
+
+        mRecyclerView = findViewById(R.id.book_recycler_view);
+        mProgressBar = findViewById(R.id.progress_bar_main);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        mBooksList = new ArrayList<>();
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference("images");
+        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    Books books = snapshot.getValue(Books.class);
+                    mBooksList.add(books);
+                }
+                mBookAdapter = new bookAdapter(MainActivity.this,mBooksList);
+                mRecyclerView.setAdapter(mBookAdapter);
+                mProgressBar.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toasty.error(MainActivity.this,databaseError.getMessage(), Toast.LENGTH_SHORT,true).show();
+                mProgressBar.setVisibility(View.INVISIBLE);
+            }
+        });
 
 
     }
@@ -36,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_bar);
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(0);
-        menuItem.setChecked(true);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

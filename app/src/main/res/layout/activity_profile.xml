@@ -5,10 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProfileActivity">
+
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        app:cardCornerRadius="20dp"
+        app:cardBackgroundColor="@color/colorAccent">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
         app:cardCornerRadius="20dp"
         android:elevation="1dp">
         <LinearLayout
@@ -27,7 +35,7 @@
                     android:layout_marginStart="14dp"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/ic_person_solid"/>
+                    android:src="@drawable/user_profile_default"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -67,7 +75,7 @@
                 android:layout_marginTop="25dp"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@color/blue"
+                android:textColor="@color/colorAccent"
                 android:fontFamily="@font/poppins_medium"
                 android:text="@string/your_uploads"/>
 
@@ -80,13 +88,18 @@
                 android:layout_marginBottom="20dp"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@color/blue"
+                android:textColor="@color/colorAccent"
                 android:fontFamily="@font/poppins_medium"
                 android:text="@string/sign_out"/>
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
-
+</androidx.cardview.widget.CardView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/very_light_grey"
+        android:layout_above="@id/bottom_navigation_bar"/>
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_bar"
         android:layout_width="match_parent"
@@ -94,6 +107,7 @@
         android:layout_gravity="bottom"
         app:menu="@menu/bottom_nav_bar"
         android:layout_alignParentBottom="true"
+        app:labelVisibilityMode="unlabeled"
         android:background="@color/colorAccent"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"/>

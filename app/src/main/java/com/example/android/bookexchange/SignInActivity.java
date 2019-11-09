@@ -42,8 +42,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void logInClick(View v) {
-        loginButton.setEnabled(false);
-        loginButton.setBackgroundResource(R.drawable.log_in_button_disabled);
+
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
@@ -52,6 +51,8 @@ public class SignInActivity extends AppCompatActivity {
         } else if (TextUtils.isEmpty(password)) {
             passwordEditText.setError("Enter password");
         } else {
+            loginButton.setEnabled(false);
+            loginButton.setBackgroundResource(R.drawable.log_in_button_disabled);
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override

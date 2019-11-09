@@ -16,11 +16,18 @@
 
 
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="20dp"
+        app:cardBackgroundColor="@color/colorAccent">
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardElevation="0dp"
-            android:layout_margin="8dp">
+            app:cardCornerRadius="20dp"
+            android:layout_margin="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -28,7 +35,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_margin="8dp"
+                    android:layout_margin="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
@@ -43,7 +50,7 @@
                     android:orientation="horizontal">
 
                     <androidx.cardview.widget.CardView
-                        android:layout_margin="8dp"
+                        android:layout_margin="12dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:cardCornerRadius="10dp"
@@ -60,17 +67,19 @@
                                 android:layout_width="130dp"
                                 android:layout_height="130dp"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/books"/>
+                                android:src="@drawable/selection"/>
 
                             <Button
                                 android:id="@+id/select_image_button"
                                 android:layout_gravity="bottom|center"
                                 android:layout_width="130dp"
+                                android:textAllCaps="false"
+                                android:fontFamily="@font/poppins_medium"
+                                android:textStyle="bold"
                                 android:layout_height="wrap_content"
                                 android:text="@string/select_image"
                                 android:background="@drawable/select_image_button"
                                 android:textColor="@color/white"
-                                android:textSize="12sp"
                                 />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -120,7 +129,7 @@
                 </LinearLayout>
                     <EditText
                         android:id="@+id/book_names_edit_text"
-                        android:layout_margin="10dp"
+                        android:layout_margin="12dp"
                         android:gravity="start"
                         android:layout_width="match_parent"
                         android:layout_height="80dp"
@@ -134,7 +143,7 @@
                     android:fontFamily="@font/poppins_medium"
                     android:textColor="@color/black"
                     android:textSize="20sp"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="12dp"
                     android:textStyle="bold"/>
 
                <LinearLayout
@@ -150,7 +159,7 @@
                        android:fontFamily="@font/poppins_medium"
                        android:textColor="@color/black"
                        android:textSize="18sp"
-                       android:layout_marginStart="8dp"
+                       android:layout_marginStart="12dp"
                        android:textStyle="bold"/>
 
                    <EditText
@@ -175,19 +184,27 @@
                     style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>-->
                 <Button
                     android:id="@+id/upload_submit_button"
-                    android:layout_marginTop="6dp"
-                    android:layout_width="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="160dp"
                     android:layout_height="wrap_content"
                     android:text="@string/submit"
                     android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"
+                    android:layout_marginBottom="20dp"
                     android:onClick="uploadSubmitButtonClick"
                     android:fontFamily="@font/poppins_medium"
                     android:background="@drawable/log_in_button"
                     android:layout_gravity="center"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
+    </androidx.cardview.widget.CardView>
     </ScrollView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/very_light_grey"
+        android:layout_above="@id/bottom_navigation_bar"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_bar"
@@ -195,8 +212,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
+        app:labelVisibilityMode="unlabeled"
         android:background="@color/colorAccent"
         app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white"
+        app:itemTextColor="@color/light_grey"
         app:menu="@menu/bottom_nav_bar" />
 </RelativeLayout>
