@@ -21,9 +21,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseReference;
     private List<Books> mBooksList;
     private bookAdapter mBookAdapter;
-    private ProgressBar mProgressBar;
+    //private ProgressBar mProgressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,26 +44,34 @@ public class MainActivity extends AppCompatActivity {
         navbarDisplay();
 
         mRecyclerView = findViewById(R.id.book_recycler_view);
-        mProgressBar = findViewById(R.id.progress_bar_main);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        //mProgressBar = findViewById(R.id.progress_bar_main);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
+        mRecyclerView.setLayoutManager(gridLayoutManager);
         mBooksList = new ArrayList<>();
+        mBookAdapter = new bookAdapter(MainActivity.this,mBooksList);
+        mRecyclerView.setAdapter(mBookAdapter);
+        Collections.reverse(mBooksList);
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("images");
+        String id = mDatabaseReference.getKey();
         mDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //Might break
+                mBooksList.clear();
                 for(DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    //Collections.reverse(mBooksList);
                     Books books = snapshot.getValue(Books.class);
                     mBooksList.add(books);
                 }
-                mBookAdapter = new bookAdapter(MainActivity.this,mBooksList);
-                mRecyclerView.setAdapter(mBookAdapter);
-                mProgressBar.setVisibility(View.INVISIBLE);
+                //mProgressBar.setVisibility(View.INVISIBLE);
+                Collections.reverse(mBooksList);
+                mBookAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toasty.error(MainActivity.this,databaseError.getMessage(), Toast.LENGTH_SHORT,true).show();
-                mProgressBar.setVisibility(View.INVISIBLE);
+                //mProgressBar.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -77,8 +88,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void navbarDisplay() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_bar);
-        Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem = menu.getItem(0);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

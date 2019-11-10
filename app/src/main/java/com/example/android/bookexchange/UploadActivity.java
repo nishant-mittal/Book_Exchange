@@ -3,6 +3,7 @@ package com.example.android.bookexchange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import es.dmoral.toasty.Toasty;
 
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,6 +38,11 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class UploadActivity extends AppCompatActivity {
     private ImageView bookImage;
@@ -77,8 +84,6 @@ public class UploadActivity extends AppCompatActivity {
 
     public void navbarDisplay() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_bar);
-        Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem = menu.getItem(1);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -103,7 +108,7 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     public void uploadSubmitButtonClick(View v) {
-
+        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         final String bookNames = bookNamesEditText.getText().toString();
         if(TextUtils.isEmpty(bookNames)) {
             bookNamesEditText.setError("Enter book names");
@@ -124,7 +129,7 @@ public class UploadActivity extends AppCompatActivity {
                 StorageReference fileReference = mStorageReference.child(System.currentTimeMillis()
                         + "." + getFileExtension(imageUri));
 
-                mUploadTask = fileReference.putFile(imageUri)
+               mUploadTask  = fileReference.putFile(imageUri)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -137,25 +142,55 @@ public class UploadActivity extends AppCompatActivity {
                                 }, 500);*/
 
 
+                               /* DateFormat simple = new SimpleDateFormat("dd MMMM yyyy,h:mm a");
+                                Date result = new Date(System.currentTimeMillis());
+                                String date = "" + simple.format(result);*/
 
-                                Books bookDataEntry = new Books(taskSnapshot.getMetadata().getReference().getDownloadUrl().toString(),semester,branch,bookNames,"" + System.currentTimeMillis(),phoneNumber);
+                                Task<Uri> task = taskSnapshot.getMetadata().getReference().getDownloadUrl();
+                                task.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        String photoLink = uri.toString();
+                                        DateFormat simple = new SimpleDateFormat("dd MMMM yyyy \nh:mm a");
+                                        Date result = new Date(System.currentTimeMillis());
+                                        String date = "" + simple.format(result);
+                                        String email = firebaseUser.getEmail();
+                                        Log.d("tag", "Email" + email);
+                                        Books bookDataEntry = new Books(photoLink,semester,branch,bookNames,"" + System.currentTimeMillis(),date,phoneNumber,email);
                                 /*Upload upload = new Upload(mEditTextFileName.getText().toString().trim(),
                                         taskSnapshot.getDownloadUrl().toString());*/
+                                        String uploadId = mDatabaseReference.push().getKey();
+                                        Log.d("tag", "onSuccess: " + date);
+                                        mDatabaseReference.child(uploadId).setValue(bookDataEntry);
+                                        Toasty.success(UploadActivity.this,"Upload successful",Toasty.LENGTH_SHORT).show();
+                                        //Toast.makeText(UploadActivity.this, "Upload successful", Toast.LENGTH_LONG).show();
+                                        submitButton.setEnabled(true);
+                                        Drawable drawable = getDrawable(R.drawable.log_in_button);
+                                        submitButton.setBackground(drawable);
+                                        Intent intent = new Intent(UploadActivity.this,MainActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
+
+
+                               /* Books bookDataEntry = new Books(taskSnapshot.getMetadata().getReference().getDownloadUrl().toString(),semester,branch,bookNames,"" + System.currentTimeMillis(),date,phoneNumber);
+                                *//*Upload upload = new Upload(mEditTextFileName.getText().toString().trim(),
+                                        taskSnapshot.getDownloadUrl().toString());*//*
                                 String uploadId = mDatabaseReference.push().getKey();
-                                Log.d("tag", "onSuccess: " + mStorageReference.child("images/" + uploadId).getDownloadUrl().toString());
+                                Log.d("tag", "onSuccess: " + date);
                                 mDatabaseReference.child(uploadId).setValue(bookDataEntry);
                                 Toast.makeText(UploadActivity.this, "Upload successful", Toast.LENGTH_LONG).show();
                                 submitButton.setEnabled(true);
                                 Drawable drawable = getDrawable(R.drawable.log_in_button);
                                 submitButton.setBackground(drawable);
                                 Intent intent = new Intent(UploadActivity.this,MainActivity.class);
-                                startActivity(intent);
+                                startActivity(intent);*/
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(UploadActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toasty.error(UploadActivity.this, "Upload failed", Toasty.LENGTH_SHORT).show();
                             }
                         })
                         .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -182,7 +217,8 @@ public class UploadActivity extends AppCompatActivity {
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
-            bookImage.setImageURI(imageUri);
+            Picasso.get().load(imageUri).into(bookImage);
+            //bookImage.setImageURI(imageUri);
         }
     }
 

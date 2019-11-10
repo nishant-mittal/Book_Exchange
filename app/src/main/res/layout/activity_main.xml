@@ -10,24 +10,29 @@
         android:layout_width=""
         android:layout_height=""-->
 
-    <androidx.core.widget.ContentLoadingProgressBar
+   <!-- <androidx.core.widget.ContentLoadingProgressBar
         android:id="@+id/progress_bar_main"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="20dp"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/book_recycler_view"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
+        android:layout_margin="20dp"/>-->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottom_navigation_bar"/>
+        android:orientation="vertical"
+        android:layout_above="@id/bottom_navigation_bar">
 
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_above="@id/bottom_navigation_bar"
-        android:background="@color/very_light_grey" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/book_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+
+
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_bar"

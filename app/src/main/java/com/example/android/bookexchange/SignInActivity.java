@@ -2,6 +2,7 @@ package com.example.android.bookexchange;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import es.dmoral.toasty.Toasty;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -61,11 +62,11 @@ public class SignInActivity extends AppCompatActivity {
                                 Log.d(TAG, "signInWithEmail:success");
                                 Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                                 startActivity(intent);
-                                Toast.makeText(getApplicationContext(), R.string.log_in_successful, Toast.LENGTH_SHORT).show();
+                                Toasty.success(getApplicationContext(), R.string.log_in_successful, Toasty.LENGTH_SHORT).show();
 
                             } else {
                                 // If sign in fails, display a message to the user.
-                                Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
+                                Toasty.error(getApplicationContext(), "Authentication failed", Toasty.LENGTH_SHORT).show();
                                 loginButton.setEnabled(true);
                                 loginButton.setBackgroundResource(R.drawable.log_in_button);
                             }

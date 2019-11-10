@@ -5,18 +5,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_margin="6dp"
+    app:cardCornerRadius="12dp"
     app:cardElevation="3dp">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/very_light_grey">
+        android:background="@color/light_grey">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/book_card_card_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:cardCornerRadius="12dp"
             android:layout_margin="1dp">
 
 
@@ -58,7 +60,7 @@
                             android:fontFamily="@font/poppins_medium"
                             android:text="@string/branch"
                             android:textColor="@color/black"
-                            android:textSize="12sp" />
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/book_card_branch"
@@ -66,15 +68,14 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="2dp"
                             android:fontFamily="@font/poppins_medium"
-                            android:textColor="@color/black"
-                            android:textSize="12sp"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="16sp"
                             tools:text="ISE" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -83,15 +84,15 @@
                             android:fontFamily="@font/poppins_medium"
                             android:text="@string/semester"
                             android:textColor="@color/black"
-                            android:textSize="12sp" />
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/book_card_semester"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_medium"
-                            android:textColor="@color/black"
-                            android:textSize="12sp"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="16sp"
                             tools:text="3" />
                     </LinearLayout>
 
