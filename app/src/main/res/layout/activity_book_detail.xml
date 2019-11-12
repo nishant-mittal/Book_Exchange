@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BookDetailActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:background="#F1F5F9"
+            android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:layout_margin="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="3dp">
+
+                <ImageView
+                    android:id="@+id/book_detail_image_view"
+                    android:scaleType="centerInside"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    tools:src="@drawable/books"/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="1000dp"
+                app:cardBackgroundColor="#F1F5F9"
+                app:cardElevation="0dp"
+                android:layout_marginTop="270dp">
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:padding="12dp"
+                   android:orientation="vertical">
+
+                   <androidx.cardview.widget.CardView
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       app:cardCornerRadius="20dp"
+                       app:cardElevation="3dp">
+
+                       <LinearLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="match_parent"
+                           android:orientation="vertical">
+
+
+                           <LinearLayout
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content"
+                               android:orientation="horizontal">
+
+                               <TextView
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:text="@string/branch"
+                                   android:textSize="20sp"
+                                   android:textStyle="bold"
+                                   android:paddingTop="8dp"
+                                   android:layout_marginStart="8dp"
+                                   android:layout_marginEnd="2dp"
+                                   android:fontFamily="@font/poppins_medium"
+                                   android:textColor="@color/black"/>
+
+                               <TextView
+                                   android:id="@+id/book_detail_branch_text_view"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   tools:text="ISE"
+                                   android:textSize="20sp"
+                                   android:textStyle="bold"
+                                   android:fontFamily="@font/poppins_medium"
+                                   android:textColor="@color/colorAccent"/>
+                           </LinearLayout>
+                           <LinearLayout
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content"
+                               android:orientation="horizontal">
+
+                               <TextView
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:text="@string/semester"
+                                   android:textSize="20sp"
+                                   android:textStyle="bold"
+                                   android:paddingTop="4dp"
+                                   android:layout_marginStart="8dp"
+                                   android:layout_marginEnd="2dp"
+                                   android:fontFamily="@font/poppins_medium"
+                                   android:textColor="@color/black"/>
+
+                               <TextView
+                                   android:id="@+id/book_detail_semester_text_view"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   tools:text="5"
+                                   android:textSize="20sp"
+                                   android:textStyle="bold"
+                                   android:fontFamily="@font/poppins_medium"
+                                   android:textColor="@color/colorAccent"/>
+                           </LinearLayout>
+
+                           <TextView
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:text="@string/books"
+                               android:textSize="20sp"
+                               android:textStyle="bold"
+                               android:fontFamily="@font/poppins_medium"
+                               android:textColor="@color/black"
+                               android:layout_marginStart="8dp"/>
+
+                           <TextView
+                               android:id="@+id/book_detail_books_text_view"
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content"
+                               tools:text="@string/books"
+                               android:textSize="16sp"
+                               android:textStyle="bold"
+                               android:fontFamily="@font/poppins_medium"
+                               android:layout_marginStart="8dp"/>
+
+
+                       </LinearLayout>
+
+                   </androidx.cardview.widget.CardView>
+               </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </FrameLayout>
+    </LinearLayout>
+</ScrollView>

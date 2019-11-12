@@ -131,7 +131,7 @@
 
 
             <Button
-                android:layout_width="300dp"
+                android:layout_width="220dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"

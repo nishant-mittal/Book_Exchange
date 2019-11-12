@@ -114,7 +114,7 @@ public class UploadActivity extends AppCompatActivity {
             bookNamesEditText.setError("Enter book names");
         }
         final String phoneNumber = phoneEditText.getText().toString().trim();
-        if(TextUtils.isEmpty(phoneNumber) || phoneNumber.length() != 10) {
+        if(TextUtils.isEmpty(phoneNumber) || !(phoneNumber.length() == 10)) {
             phoneEditText.setError("Invalid phone number");
         }
         if(imageUri == null) {

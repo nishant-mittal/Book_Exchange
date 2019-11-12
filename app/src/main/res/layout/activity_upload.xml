@@ -200,11 +200,11 @@
         </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>
     </ScrollView>
-    <View
+    <!--<View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/very_light_grey"
-        android:layout_above="@id/bottom_navigation_bar"/>
+        android:layout_above="@id/bottom_navigation_bar"/>-->
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_bar"

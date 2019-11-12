@@ -6,6 +6,8 @@
     <string name="submit">Submit</string>
     <string name="log_in">Log in</string>
     <string name="upload">Upload</string>
+    <string name="books">Books:</string>
+    <string name="uploaded_on">Uploaded on:</string>
     <string name="semester">Semester:</string>
     <string name="branch">Branch:</string>
     <string name="number">+91</string>

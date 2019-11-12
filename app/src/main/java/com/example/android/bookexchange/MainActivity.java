@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private RecyclerView mRecyclerView;
     private DatabaseReference mDatabaseReference;
-    private List<Books> mBooksList;
+    public static List<Books> mBooksList;
     private bookAdapter mBookAdapter;
     //private ProgressBar mProgressBar;
     @Override
@@ -49,8 +49,17 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(gridLayoutManager);
         mBooksList = new ArrayList<>();
         mBookAdapter = new bookAdapter(MainActivity.this,mBooksList);
+        mBookAdapter.setListener(new bookAdapter.Listener() {
+            @Override
+            public void onClick(int position) {
+                Intent intent = new Intent(MainActivity.this,BookDetailActivity.class);
+                intent.putExtra("position",position);
+                startActivity(intent);
+            }
+        });
         mRecyclerView.setAdapter(mBookAdapter);
-        Collections.reverse(mBooksList);
+        //Might break
+        /*Collections.reverse(mBooksList);*/
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("images");
         String id = mDatabaseReference.getKey();
         mDatabaseReference.addValueEventListener(new ValueEventListener() {
