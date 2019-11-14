@@ -5,17 +5,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F1F5F9"
     tools:context=".BookDetailActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:background="#F1F5F9"
-            android:layout_height="match_parent">
+
+            android:layout_height="wrap_content">
 
             <androidx.cardview.widget.CardView
                 android:layout_margin="12dp"
@@ -34,14 +35,14 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="1000dp"
+                android:layout_height="wrap_content"
                 app:cardBackgroundColor="#F1F5F9"
                 app:cardElevation="0dp"
                 android:layout_marginTop="270dp">
 
                <LinearLayout
                    android:layout_width="match_parent"
-                   android:layout_height="match_parent"
+                   android:layout_height="wrap_content"
                    android:padding="12dp"
                    android:orientation="vertical">
 
@@ -52,12 +53,14 @@
                        app:cardElevation="3dp">
 
                        <LinearLayout
+                           android:gravity="center"
                            android:layout_width="match_parent"
                            android:layout_height="match_parent"
                            android:orientation="vertical">
 
 
                            <LinearLayout
+                               android:gravity="center"
                                android:layout_width="match_parent"
                                android:layout_height="wrap_content"
                                android:orientation="horizontal">
@@ -78,6 +81,7 @@
                                    android:id="@+id/book_detail_branch_text_view"
                                    android:layout_width="wrap_content"
                                    android:layout_height="wrap_content"
+                                   android:paddingTop="8dp"
                                    tools:text="ISE"
                                    android:textSize="20sp"
                                    android:textStyle="bold"
@@ -85,6 +89,7 @@
                                    android:textColor="@color/colorAccent"/>
                            </LinearLayout>
                            <LinearLayout
+                               android:gravity="center"
                                android:layout_width="match_parent"
                                android:layout_height="wrap_content"
                                android:orientation="horizontal">
@@ -105,6 +110,7 @@
                                    android:id="@+id/book_detail_semester_text_view"
                                    android:layout_width="wrap_content"
                                    android:layout_height="wrap_content"
+                                   android:paddingTop="8dp"
                                    tools:text="5"
                                    android:textSize="20sp"
                                    android:textStyle="bold"
@@ -124,6 +130,7 @@
 
                            <TextView
                                android:id="@+id/book_detail_books_text_view"
+                               android:gravity="center"
                                android:layout_width="match_parent"
                                android:layout_height="wrap_content"
                                tools:text="@string/books"
@@ -132,6 +139,53 @@
                                android:fontFamily="@font/poppins_medium"
                                android:layout_marginStart="8dp"/>
 
+                           <TextView
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:text="@string/contact_book_owner"
+                               android:textSize="20sp"
+                               android:textStyle="bold"
+                               android:fontFamily="@font/poppins_medium"
+                               android:textColor="@color/black"
+                               android:layout_marginStart="8dp"/>
+
+                           <TextView
+                               android:id="@+id/book_detail_phone_text_view"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:textSize="20sp"
+                               android:textStyle="bold"
+                               android:fontFamily="@font/poppins_medium"
+                               android:textColor="@color/colorAccent"
+                               tools:text="97253289540"
+                               android:layout_marginStart="8dp"/>
+
+                           <LinearLayout
+                               android:layout_marginBottom="20dp"
+                               android:layout_marginTop="10dp"
+                               android:gravity="center"
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content"
+                               android:orientation="horizontal">
+
+                               <com.google.android.material.floatingactionbutton.FloatingActionButton
+                                   android:id="@+id/phone_FAB"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:layout_marginEnd="8dp"
+                                   android:background="@color/colorAccent"
+                                   app:elevation="0dp"
+                                   android:src="@drawable/ic_phone"/>
+
+                               <com.google.android.material.floatingactionbutton.FloatingActionButton
+                                   android:id="@+id/message_FAB"
+                                   app:elevation="0dp"
+                                   android:layout_width="wrap_content"
+                                   android:layout_marginStart="8dp"
+                                   android:layout_height="wrap_content"
+                                   android:background="@color/colorAccent"
+                                   android:src="@drawable/ic_message"/>
+                           </LinearLayout>
 
                        </LinearLayout>
 

@@ -9,6 +9,7 @@ import es.dmoral.toasty.Toasty;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         navbarDisplay();
-
         mRecyclerView = findViewById(R.id.book_recycler_view);
         //mProgressBar = findViewById(R.id.progress_bar_main);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
@@ -97,6 +97,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void navbarDisplay() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_bar);
+        Menu menu = bottomNavigationView.getMenu();
+        MenuItem menuItem = menu.getItem(0);
+        menuItem.setChecked(true);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

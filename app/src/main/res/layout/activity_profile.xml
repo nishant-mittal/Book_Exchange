@@ -107,7 +107,6 @@
         android:layout_gravity="bottom"
         app:menu="@menu/bottom_nav_bar"
         android:layout_alignParentBottom="true"
-        app:labelVisibilityMode="unlabeled"
         android:background="@color/colorAccent"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"/>

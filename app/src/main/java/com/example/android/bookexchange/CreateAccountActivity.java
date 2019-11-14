@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,11 +18,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.StorageTask;
 
 public class CreateAccountActivity extends AppCompatActivity {
     private EditText nameEditText,emailEditText,passwordEditText,rePasswordEditText,usnEditText;
     private Spinner branchSpinner;
     private FirebaseAuth mAuth;
+    private DatabaseReference mDatabaseReference;
     private static final String TAG = "CreateAccountActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,17 +40,19 @@ public class CreateAccountActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.password_edit_text_create_account);
         rePasswordEditText = findViewById(R.id.re_password_edit_text_create_account);
         usnEditText = findViewById(R.id.usn_edit_text_create_account);
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
 
         branchSpinner = findViewById(R.id.branch_spinner_create_account);
     }
     public void createAccount(View v) {
-        String name,email,password,repassword,usn;
+        final String name,email,password,repassword,usn,branch;
 
         name = nameEditText.getText().toString();
         email = emailEditText.getText().toString();
         password = passwordEditText.getText().toString();
         repassword = rePasswordEditText.getText().toString();
         usn = usnEditText.getText().toString();
+        branch = branchSpinner.getSelectedItem().toString();
 
         if(TextUtils.isEmpty(name)) {
             nameEditText.setError("Enter name");
@@ -84,6 +91,10 @@ public class CreateAccountActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG, "createUserWithEmail:success");
+                                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                DatabaseReference myRef = database.getReference("users/" + usn);
+                                UserData userData = new UserData(email,name,usn,branch);
+                                myRef.setValue(userData);
                                 Intent intent = new Intent(CreateAccountActivity.this, MainActivity.class);
                                 startActivity(intent);
 

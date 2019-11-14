@@ -212,9 +212,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        app:labelVisibilityMode="unlabeled"
         android:background="@color/colorAccent"
         app:itemIconTint="@color/white"
-        app:itemTextColor="@color/light_grey"
+        app:itemTextColor="@color/white"
         app:menu="@menu/bottom_nav_bar" />
 </RelativeLayout>
