@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //Might break
                 mBooksList.clear();
+                //Hello Delete this later
                 for(DataSnapshot snapshot: dataSnapshot.getChildren()) {
                     //Collections.reverse(mBooksList);
                     Books books = snapshot.getValue(Books.class);
