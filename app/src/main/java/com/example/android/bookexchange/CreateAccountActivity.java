@@ -2,6 +2,7 @@ package com.example.android.bookexchange;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import es.dmoral.toasty.Toasty;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -25,6 +27,7 @@ import com.google.firebase.storage.StorageTask;
 public class CreateAccountActivity extends AppCompatActivity {
     private EditText nameEditText,emailEditText,passwordEditText,rePasswordEditText,usnEditText;
     private Spinner branchSpinner;
+    private Button createAccountButton;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseReference;
     private static final String TAG = "CreateAccountActivity";
@@ -40,6 +43,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.password_edit_text_create_account);
         rePasswordEditText = findViewById(R.id.re_password_edit_text_create_account);
         usnEditText = findViewById(R.id.usn_edit_text_create_account);
+        createAccountButton = findViewById(R.id.create_account_button);
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
 
         branchSpinner = findViewById(R.id.branch_spinner_create_account);
@@ -84,6 +88,8 @@ public class CreateAccountActivity extends AppCompatActivity {
             usnEditText.setError("Enter usn");
         }
         else {
+            createAccountButton.setEnabled(false);
+            createAccountButton.setBackgroundResource(R.drawable.log_in_button_disabled);
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -95,13 +101,16 @@ public class CreateAccountActivity extends AppCompatActivity {
                                 DatabaseReference myRef = database.getReference("users/" + usn);
                                 UserData userData = new UserData(email,name,usn,branch);
                                 myRef.setValue(userData);
+                                Toasty.success(CreateAccountActivity.this,"Account created",Toasty.LENGTH_SHORT).show();
                                 Intent intent = new Intent(CreateAccountActivity.this, MainActivity.class);
                                 startActivity(intent);
 
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                Toast.makeText(CreateAccountActivity.this, R.string.account_could_not_be_created,
+                                createAccountButton.setEnabled(true);
+                                createAccountButton.setBackgroundResource(R.drawable.log_in_button);
+                                Toasty.error(CreateAccountActivity.this, R.string.account_could_not_be_created,
                                         Toast.LENGTH_SHORT).show();
                             }
 
