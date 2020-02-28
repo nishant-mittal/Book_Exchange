@@ -79,6 +79,11 @@ public class SignInActivity extends AppCompatActivity {
         Intent intent = new Intent(SignInActivity.this, CreateAccountActivity.class);
         startActivity(intent);
     }
+
+    public void resetPassword(View v) {
+        Intent intent = new Intent(SignInActivity.this,ResetPasswordActivity.class);
+        startActivity(intent);
+    }
     @Override
     protected void onStart() {
         super.onStart();
