@@ -6,6 +6,8 @@ public class UserData {
     private String usn;
     private String branch;
 
+    public UserData(){}
+
     public UserData(String name, String email, String usn, String branch) {
         this.name = name;
         this.email = email;

@@ -175,13 +175,13 @@
                </LinearLayout>
 
 
-                <!--<ProgressBar
+                <ProgressBar
+                    android:id="@+id/progress_bar"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    android:id="@+id/progress_bar"
-                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>-->
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
                 <Button
                     android:id="@+id/upload_submit_button"
                     android:layout_marginTop="10dp"

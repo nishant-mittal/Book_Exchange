@@ -54,7 +54,7 @@ public class UploadActivity extends AppCompatActivity {
     private StorageReference mStorageReference;
     private DatabaseReference mDatabaseReference;
     private StorageTask mUploadTask;
-    //private ProgressBar mProgressBar;
+    private ProgressBar mProgressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,11 +67,11 @@ public class UploadActivity extends AppCompatActivity {
         branchSpinner = findViewById(R.id.select_branch_spinner);
         bookNamesEditText = findViewById(R.id.book_names_edit_text);
         phoneEditText = findViewById(R.id.enter_phone_edit_text);
-        //mProgressBar = findViewById(R.id.progress_bar);
+        mProgressBar = findViewById(R.id.progress_bar);
         navbarDisplay();
 
         mStorageReference = FirebaseStorage.getInstance().getReference("images");
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference("images");
+        //mDatabaseReference = FirebaseDatabase.getInstance().getReference("images");
 
         selectImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,13 +117,23 @@ public class UploadActivity extends AppCompatActivity {
             bookNamesEditText.setError("Enter book names");
         }
         final String phoneNumber = phoneEditText.getText().toString().trim();
-        if(TextUtils.isEmpty(phoneNumber) || !(phoneNumber.length() == 10)) {
+        /*if(TextUtils.isEmpty(phoneNumber) || !(phoneNumber.length() == 10)) {
             phoneEditText.setError("Invalid phone number");
-        }
-        if(imageUri == null) {
-            Toast.makeText(UploadActivity.this, R.string.select_image, Toast.LENGTH_SHORT).show();
+        }*/
+        //Todo:Test this
+        /*if (!(phoneNumber.matches("[0-9]+") && phoneNumber.length() == 10)) {
+            phoneEditText.setError("Invalid phone number");
+        }*/
+        if((imageUri == null) || !(phoneNumber.matches("[0-9]+") && phoneNumber.length() == 10)) {
+            Toasty.error(UploadActivity.this, "You forgot something", Toast.LENGTH_SHORT).show();
+
         }
         else {
+            String email = firebaseUser.getEmail();
+            //int position = email.indexOf("@");
+            //String mail = email.substring(0,position);
+            String userBranch = branchSpinner.getSelectedItem().toString();
+            mDatabaseReference = FirebaseDatabase.getInstance().getReference("uploads/" + userBranch);
             submitButton.setEnabled(false);
             Drawable drawable = getDrawable(R.drawable.log_in_button_disabled);
             submitButton.setBackground(drawable);
@@ -136,18 +146,18 @@ public class UploadActivity extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                               /* Handler handler = new Handler();
+                                Handler handler = new Handler();
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
                                         mProgressBar.setProgress(0);
                                     }
-                                }, 500);*/
+                                }, 500);
 
 
-                               /* DateFormat simple = new SimpleDateFormat("dd MMMM yyyy,h:mm a");
+                                DateFormat simple = new SimpleDateFormat("dd MMMM yyyy,h:mm a");
                                 Date result = new Date(System.currentTimeMillis());
-                                String date = "" + simple.format(result);*/
+                                String date = "" + simple.format(result);
 
                                 Task<Uri> task = taskSnapshot.getMetadata().getReference().getDownloadUrl();
                                 task.addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -158,6 +168,8 @@ public class UploadActivity extends AppCompatActivity {
                                         Date result = new Date(System.currentTimeMillis());
                                         String date = "" + simple.format(result);
                                         String email = firebaseUser.getEmail();
+                                        //int position = email.indexOf("@");
+                                        //String mail = email.substring(0,position);
                                         Log.d("tag", "Email" + email);
                                         Books bookDataEntry = new Books(photoLink,semester,branch,bookNames,"" + System.currentTimeMillis(),date,phoneNumber,email);
                                 /*Upload upload = new Upload(mEditTextFileName.getText().toString().trim(),
@@ -199,8 +211,8 @@ public class UploadActivity extends AppCompatActivity {
                         .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                                /*double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                                mProgressBar.setProgress((int) progress);*/
+                                double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                                mProgressBar.setProgress((int) progress);
                             }
                         });
 

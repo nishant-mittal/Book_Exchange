@@ -92,8 +92,12 @@ public class CreateAccountActivity extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG, "createUserWithEmail:success");
                                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                                DatabaseReference myRef = database.getReference("users/" + usn);
-                                UserData userData = new UserData(email,name,usn,branch);
+                                int position = email.indexOf("@");
+                                String mail = email.substring(0,position);
+                                String actualmail=mail.replace(".","_");
+                                Log.d(TAG, "Mail " + actualmail);
+                                DatabaseReference myRef = database.getReference("users/"+ actualmail);
+                                UserData userData = new UserData(name,email,usn,branch);
                                 myRef.setValue(userData);
                                 Intent intent = new Intent(CreateAccountActivity.this, MainActivity.class);
                                 startActivity(intent);
