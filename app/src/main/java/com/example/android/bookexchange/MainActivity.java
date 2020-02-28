@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static void fetchingUploads(String branch, DatabaseReference mDatabaseReference, final bookAdapter mBookAdapter){
 
-
+//
         Log.d(TAG, "onCreate: before fetching" + branch);
         while (branch == null){
             Log.d(TAG, "onCreate: inside while " + branch);
